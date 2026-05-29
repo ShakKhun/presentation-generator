@@ -1,0 +1,222 @@
+{
+  "theme": "light-modern",
+  "slides": [
+    {
+      "type": "title",
+      "title": "Technology & Work",
+      "subtitle": "B1 · Урок для русскоязычных студентов"
+    },
+    {
+      "type": "word-bank",
+      "words": [
+        {
+          "word": "reliable",
+          "pronunciation": "/rɪˈlaɪəbəl/",
+          "translation": "надёжный",
+          "association": "друг, на которого всегда можно положиться",
+          "example": "She is a reliable employee."
+        },
+        {
+          "word": "innovative",
+          "pronunciation": "/ˈɪnəveɪtɪv/",
+          "translation": "инновационный",
+          "association": "стартап с новыми идеями",
+          "example": "They use innovative tools in class."
+        },
+        {
+          "word": "efficient",
+          "pronunciation": "/ɪˈfɪʃənt/",
+          "translation": "эффективный",
+          "association": "быстрый и удобный процесс работы",
+          "example": "This app is very efficient."
+        },
+        {
+          "word": "automate",
+          "pronunciation": "/ˈɔːtəmeɪt/",
+          "translation": "автоматизировать",
+          "association": "роботы выполняют рутину",
+          "example": "We automate email replies."
+        },
+        {
+          "word": "digital",
+          "pronunciation": "/ˈdɪdʒɪtl/",
+          "translation": "цифровой",
+          "association": "экраны и онлайн-файлы",
+          "example": "Students prefer digital notes."
+        },
+        {
+          "word": "upgrade",
+          "pronunciation": "/ʌpˈɡreɪd/",
+          "translation": "обновлять",
+          "association": "новый телефон, новая версия ПО",
+          "example": "I need to upgrade my laptop."
+        }
+      ]
+    },
+    {
+      "type": "reading",
+      "badge": "Reading",
+      "title": "The rise of remote work",
+      "intro": "Прочитайте текст. Обратите внимание на выделенные слова и выражения.",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "A new normal"
+        },
+        {
+          "type": "paragraph",
+          "text": "Since 2020, millions of professionals have been working from home. A reliable internet connection has become just as important as a comfortable desk.",
+          "highlights": ["have been working", "reliable"]
+        },
+        {
+          "type": "heading",
+          "text": "Technology at work"
+        },
+        {
+          "type": "paragraph",
+          "text": "Companies want to automate routine tasks and build more efficient teams. Many students upgrade their devices every few years to stay digital-ready.",
+          "highlights": ["automate", "efficient", "upgrade", "digital-ready"]
+        }
+      ]
+    },
+    {
+      "type": "grammar",
+      "badge": "Grammar",
+      "title": "Present Perfect",
+      "subtitle": "Настоящее совершённое время",
+      "formula": "have / has + V3 (past participle)",
+      "explanation": "We use the Present Perfect to connect the past with the present — experiences, changes, and unfinished time periods.",
+      "bullets": [
+        "Действие началось в прошлом и важно сейчас",
+        "Опыт в жизни без точной даты (ever, never)",
+        "С for / since — сколько времени длится ситуация"
+      ],
+      "examples": [
+        {
+          "en": "She has worked from home since 2021.",
+          "ru": "Она работает из дома с 2021 года."
+        },
+        {
+          "en": "They have upgraded their software this month.",
+          "ru": "В этом месяце они обновили своё ПО."
+        },
+        {
+          "en": "I have never used such an efficient app before.",
+          "ru": "Я никогда раньше не пользовался таким эффективным приложением."
+        }
+      ],
+      "tip": "Слова-маркеры: since, for, already, yet, ever, never."
+    },
+    {
+      "type": "gap-fill",
+      "badge": "Practice",
+      "title": "Fill in the blank",
+      "intro": "Спросите ученика вслух. Правильный ответ показан ниже.",
+      "items": [
+        {
+          "text": "She ____ yesterday",
+          "hint": "work",
+          "answer": "worked"
+        },
+        {
+          "text": "They have ____ their laptops this year.",
+          "hint": "upgrade",
+          "answer": "upgraded"
+        },
+        {
+          "text": "Yesterday I ___ to work and ___ my manager.",
+          "hints": ["go", "meet"],
+          "answers": ["went", "met"]
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "badge": "Quiz",
+      "title": "Choose the correct answer",
+      "intro": "Выберите вариант и нажмите Check.",
+      "questions": [
+        {
+          "prompt": "She ___ from home since 2021.",
+          "options": ["has worked", "worked", "works", "is work"],
+          "answer": 0
+        },
+        {
+          "prompt": "A ___ internet connection is essential.",
+          "options": ["reliable", "reliably", "rely", "relied"],
+          "answer": 0
+        },
+        {
+          "prompt": "We want to ___ routine tasks.",
+          "options": ["automate", "automatic", "automation", "automated"],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "type": "error-correction",
+      "badge": "Fix it",
+      "title": "Correct the sentence",
+      "intro": "Обсудите ошибку устно. Правильный вариант — внизу.",
+      "items": [
+        {
+          "incorrect": "She don't like digital tools.",
+          "correct": "She doesn't like digital tools.",
+          "hint": "3rd person singular"
+        },
+        {
+          "incorrect": "They have upgrade their software last month.",
+          "correct": "They upgraded their software last month.",
+          "hint": "Past simple vs Present Perfect"
+        }
+      ]
+    },
+    {
+      "type": "guided-speaking",
+      "badge": "Speaking",
+      "title": "Let's speak",
+      "duration": "3–4 min",
+      "intro": "Обсудите в парах или вслух с группой.",
+      "prompts": [
+        "How long have you worked or studied from home?",
+        "What digital tools do you use every day?",
+        "Describe something you have upgraded recently."
+      ],
+      "tips": ["Use Present Perfect where possible", "Use today's vocabulary"]
+    },
+    {
+      "type": "list",
+      "badge": "Homework",
+      "title": "Homework",
+      "listStyle": "number",
+      "items": [
+        "Write 5 sentences with Present Perfect",
+        "Speak for 2 minutes about your work routine",
+        "Review the word bank flashcards"
+      ]
+    },
+    {
+      "type": "list",
+      "badge": "Remember",
+      "title": "Remember",
+      "listStyle": "letter",
+      "items": [
+        "Grammar connects past and present",
+        "Consistency is the key",
+        "Be polite when you disagree",
+        "Do not give up"
+      ]
+    },
+    {
+      "type": "list",
+      "title": "Lesson overview",
+      "listStyle": "bullet",
+      "items": [
+        { "icon": "❤️", "text": "Vocabulary — word bank" },
+        { "icon": "📖", "text": "Reading & grammar" },
+        { "icon": "🎤", "text": "Speaking practice" },
+        { "icon": "✅", "text": "Homework on the last slide" }
+      ]
+    }
+  ]
+}

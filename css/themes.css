@@ -1,0 +1,79 @@
+/**
+ * Theme system — variables only; components consume var(--*).
+ */
+
+.lesson-deck {
+  --font-body: Georgia, "Times New Roman", serif;
+  --font-ui: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+}
+
+/* Light — Duolingo / EnglishDom inspired */
+.lesson-deck[data-theme="light-modern"] {
+  --bg: #f7f9fc;
+  --card: #ffffff;
+  --text: #1a2b3c;
+  --text-muted: #5c6f82;
+  --accent: #1cb0f6;
+  --accent-secondary: #58cc02;
+  --accent-soft: #e8f7fe;
+  --shadow: 0 8px 28px rgba(28, 176, 246, 0.12);
+  --shadow-soft: 0 4px 14px rgba(26, 43, 60, 0.06);
+  --border: #e8eef4;
+  --flip-back-bg: #f0f7ff;
+  --highlight-bg: #fff8d6;
+  --highlight-text: #7a5c00;
+  --highlight-border: #ffc800;
+  --grammar-bg: #eefbf0;
+  --grammar-border: #58cc02;
+  --grammar-formula-bg: linear-gradient(135deg, #e8f7fe 0%, #eefbf0 100%);
+  --tip-bg: #fff8e6;
+  --tip-border: #ffd966;
+  --badge-reading: #1cb0f6;
+  --badge-grammar: #58cc02;
+  --badge-quiz: #ce82ff;
+  --badge-oral: #ff9600;
+  --badge-speaking: #ff78b3;
+  --badge-list: #58cc02;
+  --answer-bg: #eefbf0;
+  --answer-border: #58cc02;
+  --quiz-success: #58cc02;
+  --quiz-error: #ff4b4b;
+  --quiz-neutral: #5c6f82;
+}
+
+.lesson-deck[data-theme="dark-academy"] {
+  --bg: #12151c;
+  --card: #1c2230;
+  --text: #f3f5f9;
+  --text-muted: #9aa8bc;
+  --accent: #e8b84a;
+  --accent-secondary: #6dd400;
+  --accent-soft: rgba(232, 184, 74, 0.12);
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.25);
+  --border: #2d3548;
+  --flip-back-bg: #252d3d;
+  --highlight-bg: rgba(255, 200, 0, 0.18);
+  --highlight-text: #ffe566;
+  --highlight-border: #e8b84a;
+  --grammar-bg: rgba(109, 212, 0, 0.1);
+  --grammar-border: #6dd400;
+  --grammar-formula-bg: linear-gradient(135deg, rgba(28, 176, 246, 0.15) 0%, rgba(109, 212, 0, 0.12) 100%);
+  --tip-bg: rgba(232, 184, 74, 0.12);
+  --tip-border: #e8b84a;
+  --badge-reading: #1cb0f6;
+  --badge-grammar: #6dd400;
+  --badge-quiz: #a855f7;
+  --badge-oral: #ff9600;
+  --badge-speaking: #ff78b3;
+  --badge-list: #6dd400;
+  --answer-bg: rgba(109, 212, 0, 0.12);
+  --answer-border: #6dd400;
+  --quiz-success: #6dd400;
+  --quiz-error: #ff6b6b;
+  --quiz-neutral: #9aa8bc;
+}

@@ -1,0 +1,183 @@
+/**
+ * AI Lesson Studio — application chrome (not exported with lessons).
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #0b0f14;
+  color: #e8eaed;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.25rem;
+  border-bottom: 1px solid #1e293b;
+  background: #111820;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.app-header .tagline {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.app-workspace {
+  display: grid;
+  grid-template-columns: minmax(340px, 44%) 1fr;
+  height: calc(100vh - 49px);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.panel-editor {
+  border-right: 1px solid #1e293b;
+  background: #0f1419;
+}
+
+.panel-preview {
+  background: #080b10;
+}
+
+.panel-label {
+  padding: 0.45rem 1rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #64748b;
+  border-bottom: 1px solid #1e293b;
+}
+
+#monaco-editor {
+  flex: 1;
+  min-height: 0;
+}
+
+.panel-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #1e293b;
+}
+
+.panel-toolbar label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+#theme-select {
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background: #0d1117;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+button {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  border: none;
+  transition: background 0.15s, transform 0.1s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+}
+
+.btn-secondary:hover {
+  background: #334155;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid #334155;
+}
+
+.btn-ghost:hover {
+  color: #e2e8f0;
+  background: #1e293b;
+}
+
+#status-message {
+  width: 100%;
+  margin: 0;
+  font-size: 0.78rem;
+  min-height: 1.1em;
+  color: #f87171;
+}
+
+#status-message.is-ok {
+  color: #4ade80;
+}
+
+#preview-host {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  /* Explicit height so embedded Reveal.js can measure the container */
+  height: 100%;
+}
+
+#preview-host:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+}
+
+#preview-host .lesson-deck,
+#preview-host .lesson-deck .reveal {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
