@@ -7,6 +7,7 @@ import { parseLessonJson } from "./utils.js";
 import {
   renderDeckMarkup,
   bindDeckInteractions,
+  bindDeckProgress,
   PREVIEW_REVEAL_OPTIONS,
 } from "./renderer.js";
 import { preloadExportAssets, downloadPresentation } from "./exporter.js";
@@ -47,6 +48,7 @@ function mountPreview(lesson) {
 
   const revealEl = previewDeckRoot.querySelector(".reveal");
   previewReveal = new Reveal(revealEl, PREVIEW_REVEAL_OPTIONS);
+  bindDeckProgress(previewDeckRoot, previewReveal);
   document.title = getLessonTitle(lesson) + " — AI Lesson Studio";
 
   previewReveal.initialize().then(() => {

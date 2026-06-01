@@ -34,3 +34,23 @@ npx --yes serve -p 3000
 ## Adding slide types
 
 See comments in `js/registry.js` and `js/renderer.js`.
+
+## Hidden bonus slides
+
+Add `hiddenSlides` to any slide to create vertical bonus slides under it. They are useful at the end of a lesson when the main presentation is finished but there is still time. Navigate to them with Arrow Down, and return with Arrow Up.
+
+```json
+{
+  "type": "list",
+  "title": "Lesson overview",
+  "items": ["Main lesson finished"],
+  "hiddenSlides": [
+    {
+      "type": "guided-speaking",
+      "badge": "Extra",
+      "title": "If we have more time",
+      "prompts": ["What topic would you like to discuss more?"]
+    }
+  ]
+}
+```

@@ -28,7 +28,8 @@ export function renderErrorCorrectionItem(item, index) {
     `<span>${escapeHtml(item.incorrect || "")}</span>` +
     `</div>` +
     (item.hint ? `<p class="error-hint">${escapeHtml(item.hint)}</p>` : "") +
-    `<div class="error-right duo-card-answer">` +
+    `<button type="button" class="oral-answer-btn">Show correction</button>` +
+    `<div class="error-right duo-card-answer" hidden>` +
     `<span class="answer-icon" aria-hidden="true">✓</span>` +
     `<span>${escapeHtml(correct)}</span>` +
     `</div></div>`

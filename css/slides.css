@@ -603,6 +603,33 @@
   color: var(--text);
 }
 
+.oral-answer-btn {
+  grid-column: 2;
+  justify-self: start;
+  padding: 0.55rem 1.15rem;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent-secondary);
+  border: none;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.15s;
+}
+
+.oral-answer-btn:hover {
+  filter: brightness(1.05);
+}
+
+.oral-answer-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
 .gap-answer-inline {
   color: var(--accent-secondary);
   font-weight: 800;

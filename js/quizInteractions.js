@@ -60,8 +60,26 @@ export function handleQuizCheck(btn) {
   checkMcItem(item);
 }
 
+export function revealOralAnswer(btn) {
+  const item = btn.closest(".oral-item");
+  if (!item) return;
+
+  const answer = item.querySelector(".duo-card-answer");
+  if (!answer) return;
+
+  answer.hidden = false;
+  btn.hidden = true;
+}
+
 export function bindQuizInteractions(rootEl) {
   rootEl.addEventListener("click", (e) => {
+    const oralAnswerBtn = e.target.closest(".oral-answer-btn");
+    if (oralAnswerBtn && rootEl.contains(oralAnswerBtn)) {
+      e.stopPropagation();
+      revealOralAnswer(oralAnswerBtn);
+      return;
+    }
+
     const checkBtn = e.target.closest(".quiz-check-btn");
     if (checkBtn && rootEl.contains(checkBtn)) {
       e.stopPropagation();

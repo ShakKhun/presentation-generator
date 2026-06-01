@@ -9,6 +9,10 @@
   --radius-md: 18px;
   --radius-lg: 24px;
   --radius-pill: 999px;
+  --deck-shell: #ede8df;
+  --deck-shadow: 0 22px 48px rgba(26, 43, 60, 0.12);
+  --progress-text: #1a2b3c;
+  --progress-track: rgba(26, 43, 60, 0.12);
 }
 
 /* Light — Duolingo / EnglishDom inspired */
@@ -43,6 +47,10 @@
   --quiz-success: #58cc02;
   --quiz-error: #ff4b4b;
   --quiz-neutral: #5c6f82;
+  --deck-shell: #ede8df;
+  --deck-shadow: 0 22px 48px rgba(26, 43, 60, 0.12);
+  --progress-text: #1a2b3c;
+  --progress-track: rgba(26, 43, 60, 0.12);
 }
 
 .lesson-deck[data-theme="dark-academy"] {
@@ -76,4 +84,8 @@
   --quiz-success: #6dd400;
   --quiz-error: #ff6b6b;
   --quiz-neutral: #9aa8bc;
+  --deck-shell: #070a10;
+  --deck-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --progress-text: #f3f5f9;
+  --progress-track: rgba(243, 245, 249, 0.16);
 }

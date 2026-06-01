@@ -174,8 +174,7 @@ button:active {
   outline-offset: -2px;
 }
 
-#preview-host .lesson-deck,
-#preview-host .lesson-deck .reveal {
+#preview-host .lesson-deck {
   position: absolute;
   inset: 0;
   width: 100%;

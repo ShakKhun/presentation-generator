@@ -58,12 +58,13 @@ import {
   selectMcOption,
   checkMcItem,
   handleQuizCheck,
+  revealOralAnswer,
 } from "./quizInteractions.js";
 
 export const REVEAL_OPTIONS = {
   hash: true,
-  controls: true,
-  progress: true,
+  controls: false,
+  progress: false,
   center: true,
   touch: true,
   keyboard: true,
@@ -83,15 +84,92 @@ export const PREVIEW_REVEAL_OPTIONS = {
   keyboardCondition: "focused",
 };
 
+export function updateDeckProgress(rootEl, revealInstance) {
+  const progressEl = rootEl.querySelector(".deck-progress");
+  if (!progressEl) return;
+
+  const textEl = progressEl.querySelector(".deck-progress-text");
+  const dotsEl = progressEl.querySelector(".deck-progress-dots");
+  let total = rootEl.querySelectorAll(".slides > section").length;
+  let current = 1;
+  let verticalIndex = 0;
+  let verticalTotal = 0;
+
+  try {
+    if (typeof revealInstance?.getHorizontalSlides === "function") {
+      total = revealInstance.getHorizontalSlides().length;
+    }
+    if (typeof revealInstance?.getIndices === "function") {
+      const indices = revealInstance.getIndices();
+      current = (indices.h || 0) + 1;
+      verticalIndex = indices.v || 0;
+
+      const stack = rootEl.querySelectorAll(".slides > section")[indices.h || 0];
+      verticalTotal = stack ? stack.querySelectorAll(":scope > section").length : 0;
+    }
+  } catch {
+    /* Reveal may not have finished its first layout yet. */
+  }
+
+  const safeTotal = Math.max(total, 1);
+  const safeCurrent = Math.min(Math.max(current, 1), safeTotal);
+  const isHiddenSlide = verticalIndex > 0;
+
+  if (textEl) {
+    textEl.textContent = isHiddenSlide
+      ? `Extra ${verticalIndex} of ${Math.max(verticalTotal - 1, 1)}`
+      : `Slide ${safeCurrent} of ${safeTotal}`;
+  }
+  if (dotsEl) {
+    dotsEl.innerHTML = Array.from({ length: safeTotal }, (_, i) => {
+      const slideNumber = i + 1;
+      const isActive = slideNumber === safeCurrent;
+      return `<span class="deck-progress-dot${isActive ? " is-active" : ""}" aria-label="Slide ${slideNumber}${isActive ? ", current" : ""}"></span>`;
+    }).join("");
+  }
+  progressEl.setAttribute("aria-label", `Presentation progress: slide ${safeCurrent} of ${safeTotal}`);
+}
+
+export function bindDeckProgress(rootEl, revealInstance) {
+  updateDeckProgress(rootEl, revealInstance);
+  revealInstance.on("ready", () => updateDeckProgress(rootEl, revealInstance));
+  revealInstance.on("slidechanged", () => updateDeckProgress(rootEl, revealInstance));
+}
+
 export function renderSlide(slide, index) {
   const render = slideRegistry[slide.type];
   if (render) return render(slide, index);
   return renderUnknownSlide(slide, index);
 }
 
+export function getHiddenSlides(slide) {
+  const hiddenSlides = slide?.hiddenSlides || slide?.bonusSlides || slide?.extraSlides;
+  return Array.isArray(hiddenSlides) ? hiddenSlides : [];
+}
+
+export function renderSlideStack(slide, index) {
+  const hiddenSlides = getHiddenSlides(slide);
+  if (!hiddenSlides.length) return renderSlide(slide, index);
+
+  return (
+    `<section class="hidden-slide-stack" data-hidden-slides="${hiddenSlides.length}">` +
+    renderSlide(slide, index) +
+    hiddenSlides.map((hiddenSlide, i) => renderSlide(hiddenSlide, `${index}.${i + 1}`)).join("\n") +
+    `</section>`
+  );
+}
+
 export function renderSlides(slides) {
   if (!Array.isArray(slides)) return "";
-  return slides.map((slide, i) => renderSlide(slide, i)).join("\n");
+  return slides.map((slide, i) => renderSlideStack(slide, i)).join("\n");
+}
+
+export function renderProgressDots(total) {
+  const count = Math.max(Number(total) || 1, 1);
+  return Array.from({ length: count }, (_, i) => {
+    const slideNumber = i + 1;
+    return `<span class="deck-progress-dot${i === 0 ? " is-active" : ""}" aria-label="Slide ${slideNumber}${i === 0 ? ", current" : ""}"></span>`;
+  }).join("");
 }
 
 /**
@@ -100,12 +178,20 @@ export function renderSlides(slides) {
 export function renderDeckMarkup(lesson, themeOverride) {
   const theme = resolveTheme(lesson, themeOverride);
   const slidesHtml = renderSlides(lesson.slides);
+  const slideCount = Array.isArray(lesson.slides) ? lesson.slides.length : 1;
 
   return (
     `<div class="lesson-deck" data-theme="${escapeHtml(theme)}">` +
+    `<div class="deck-stage">` +
     `<div class="reveal">` +
     `<div class="slides">${slidesHtml}</div>` +
-    `</div></div>`
+    `</div>` +
+    `</div>` +
+    `<div class="deck-progress" role="status" aria-live="polite">` +
+    `<span class="deck-progress-dots" aria-hidden="true">${renderProgressDots(slideCount)}</span>` +
+    `<span class="deck-progress-text">Slide 1 of ${slideCount}</span>` +
+    `</div>` +
+    `</div>`
   );
 }
 
@@ -183,6 +269,7 @@ export function buildStandaloneRuntimeScript() {
     inlineFunction(selectMcOption),
     inlineFunction(checkMcItem),
     inlineFunction(handleQuizCheck),
+    inlineFunction(revealOralAnswer),
     inlineFunction(bindQuizInteractions),
     `var slideRegistry = {
   title: renderTitleSlide,
@@ -196,7 +283,12 @@ export function buildStandaloneRuntimeScript() {
   list: renderListSlide
 };`,
     inlineFunction(renderSlide),
+    inlineFunction(getHiddenSlides),
+    inlineFunction(renderSlideStack),
     inlineFunction(renderSlides),
+    inlineFunction(renderProgressDots),
+    inlineFunction(updateDeckProgress),
+    inlineFunction(bindDeckProgress),
     inlineFunction(renderDeckMarkup),
     `var REVEAL_OPTIONS = ${JSON.stringify(REVEAL_OPTIONS)};`,
     `function bindDeckInteractions(rootEl) {
@@ -217,6 +309,7 @@ export function buildStandaloneRuntimeScript() {
     bindDeckInteractions(deck);
     var revealEl = deck.querySelector(".reveal");
     var instance = new Reveal(revealEl, REVEAL_OPTIONS);
+    bindDeckProgress(deck, instance);
     instance.initialize();
   } catch (err) {
     root.innerHTML = "<pre style=\\"padding:2rem;color:#b91c1c;\\">" + err.message + "</pre>";
@@ -255,8 +348,7 @@ ${assets.revealCss}
 ${assets.lessonCss}
 html, body { margin: 0; height: 100%; overflow: hidden; }
 #lesson-root { width: 100vw; height: 100vh; position: relative; }
-#lesson-root .lesson-deck,
-#lesson-root .lesson-deck .reveal { position: absolute; inset: 0; width: 100%; height: 100%; }
+#lesson-root .lesson-deck { position: absolute; inset: 0; width: 100%; height: 100%; }
   </style>
 </head>
 <body>

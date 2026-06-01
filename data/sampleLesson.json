@@ -66,7 +66,10 @@
         {
           "type": "paragraph",
           "text": "Since 2020, millions of professionals have been working from home. A reliable internet connection has become just as important as a comfortable desk.",
-          "highlights": ["have been working", "reliable"]
+          "highlights": [
+            "have been working",
+            "reliable"
+          ]
         },
         {
           "type": "heading",
@@ -75,7 +78,12 @@
         {
           "type": "paragraph",
           "text": "Companies want to automate routine tasks and build more efficient teams. Many students upgrade their devices every few years to stay digital-ready.",
-          "highlights": ["automate", "efficient", "upgrade", "digital-ready"]
+          "highlights": [
+            "automate",
+            "efficient",
+            "upgrade",
+            "digital-ready"
+          ]
         }
       ]
     },
@@ -125,8 +133,14 @@
         },
         {
           "text": "Yesterday I ___ to work and ___ my manager.",
-          "hints": ["go", "meet"],
-          "answers": ["went", "met"]
+          "hints": [
+            "go",
+            "meet"
+          ],
+          "answers": [
+            "went",
+            "met"
+          ]
         }
       ]
     },
@@ -138,17 +152,32 @@
       "questions": [
         {
           "prompt": "She ___ from home since 2021.",
-          "options": ["has worked", "worked", "works", "is work"],
+          "options": [
+            "has worked",
+            "worked",
+            "works",
+            "is work"
+          ],
           "answer": 0
         },
         {
           "prompt": "A ___ internet connection is essential.",
-          "options": ["reliable", "reliably", "rely", "relied"],
+          "options": [
+            "reliable",
+            "reliably",
+            "rely",
+            "relied"
+          ],
           "answer": 0
         },
         {
           "prompt": "We want to ___ routine tasks.",
-          "options": ["automate", "automatic", "automation", "automated"],
+          "options": [
+            "automate",
+            "automatic",
+            "automation",
+            "automated"
+          ],
           "answer": 0
         }
       ]
@@ -182,7 +211,10 @@
         "What digital tools do you use every day?",
         "Describe something you have upgraded recently."
       ],
-      "tips": ["Use Present Perfect where possible", "Use today's vocabulary"]
+      "tips": [
+        "Use Present Perfect where possible",
+        "Use today's vocabulary"
+      ]
     },
     {
       "type": "list",
@@ -212,10 +244,56 @@
       "title": "Lesson overview",
       "listStyle": "bullet",
       "items": [
-        { "icon": "❤️", "text": "Vocabulary — word bank" },
-        { "icon": "📖", "text": "Reading & grammar" },
-        { "icon": "🎤", "text": "Speaking practice" },
-        { "icon": "✅", "text": "Homework on the last slide" }
+        {
+          "icon": "❤️",
+          "text": "Vocabulary — word bank"
+        },
+        {
+          "icon": "📖",
+          "text": "Reading & grammar"
+        },
+        {
+          "icon": "🎤",
+          "text": "Speaking practice"
+        },
+        {
+          "icon": "✅",
+          "text": "Homework on the last slide"
+        }
+      ],
+      "hiddenSlides": [
+        {
+          "type": "guided-speaking",
+          "badge": "Extra",
+          "title": "If we have more time",
+          "intro": "Use these prompts only after the main lesson is finished.",
+          "prompts": [
+            "What technology has changed your routine the most?",
+            "Which tool would you like to automate, and why?",
+            "Tell a story about a time when technology helped you."
+          ],
+          "tips": [
+            "Press Arrow Up to return to the final slide"
+          ]
+        },
+        {
+          "type": "gap-fill",
+          "badge": "Extra practice",
+          "title": "Bonus challenge",
+          "intro": "Complete the sentences, then reveal the answers.",
+          "items": [
+            {
+              "text": "I have ____ this app for two years.",
+              "hint": "use",
+              "answer": "used"
+            },
+            {
+              "text": "Our team has ____ three tasks this week.",
+              "hint": "automate",
+              "answer": "automated"
+            }
+          ]
+        }
       ]
     }
   ]

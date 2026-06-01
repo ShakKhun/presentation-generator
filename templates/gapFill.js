@@ -82,7 +82,8 @@ export function renderGapFillItem(item, index) {
     `<div class="oral-item gap-fill-item">` +
     `<p class="oral-item-label">${index + 1}</p>` +
     `<div class="gap-prompt duo-card-soft">${renderGapPrompt(text, hints)}</div>` +
-    `<div class="gap-answer-reveal duo-card-answer">` +
+    `<button type="button" class="oral-answer-btn">Show answer</button>` +
+    `<div class="gap-answer-reveal duo-card-answer" hidden>` +
     `<span class="answer-icon" aria-hidden="true">✓</span>` +
     `<span class="gap-answer-text">${filled}</span>` +
     `</div></div>`
