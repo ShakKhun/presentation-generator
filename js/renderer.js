@@ -66,6 +66,7 @@ export const REVEAL_OPTIONS = {
   controls: false,
   progress: false,
   center: true,
+  disableLayout: true,
   touch: true,
   keyboard: true,
   transition: "slide",
@@ -346,8 +347,8 @@ export function generatePresentationHTML(lessonData, assets) {
 ${assets.resetCss}
 ${assets.revealCss}
 ${assets.lessonCss}
-html, body { margin: 0; height: 100%; overflow: hidden; }
-#lesson-root { width: 100vw; height: 100vh; position: relative; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--deck-shell, #ede8df); }
+#lesson-root { width: 100vw; height: 100vh; position: relative; background: var(--deck-shell, #ede8df); }
 #lesson-root .lesson-deck { position: absolute; inset: 0; width: 100%; height: 100%; }
   </style>
 </head>

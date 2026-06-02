@@ -11,44 +11,44 @@
       "words": [
         {
           "word": "reliable",
-          "pronunciation": "/rɪˈlaɪəbəl/",
+          "pronunciation": "ri-LY-uh-buhl",
           "translation": "надёжный",
-          "association": "друг, на которого всегда можно положиться",
+          "association": "dependable, trustworthy, consistent, steady",
           "example": "She is a reliable employee."
         },
         {
           "word": "innovative",
-          "pronunciation": "/ˈɪnəveɪtɪv/",
+          "pronunciation": "IN-uh-vay-tiv",
           "translation": "инновационный",
-          "association": "стартап с новыми идеями",
+          "association": "creative, original, inventive, forward-thinking",
           "example": "They use innovative tools in class."
         },
         {
           "word": "efficient",
-          "pronunciation": "/ɪˈfɪʃənt/",
+          "pronunciation": "ih-FISH-uhnt",
           "translation": "эффективный",
-          "association": "быстрый и удобный процесс работы",
+          "association": "productive, effective, organized, time-saving",
           "example": "This app is very efficient."
         },
         {
           "word": "automate",
-          "pronunciation": "/ˈɔːtəmeɪt/",
+          "pronunciation": "AW-tuh-mayt",
           "translation": "автоматизировать",
-          "association": "роботы выполняют рутину",
+          "association": "mechanize, streamline, program, systematize",
           "example": "We automate email replies."
         },
         {
           "word": "digital",
-          "pronunciation": "/ˈdɪdʒɪtl/",
+          "pronunciation": "DIJ-i-tuhl",
           "translation": "цифровой",
-          "association": "экраны и онлайн-файлы",
+          "association": "online, electronic, virtual, computerized",
           "example": "Students prefer digital notes."
         },
         {
           "word": "upgrade",
-          "pronunciation": "/ʌpˈɡreɪd/",
+          "pronunciation": "up-GRAYD",
           "translation": "обновлять",
-          "association": "новый телефон, новая версия ПО",
+          "association": "improve, update, enhance, modernize",
           "example": "I need to upgrade my laptop."
         }
       ]
@@ -83,6 +83,35 @@
             "efficient",
             "upgrade",
             "digital-ready"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "badge": "Reading",
+      "title": "Find it in the text",
+      "intro": "Read the sentences again and notice the highlighted phrases.",
+      "listStyle": "none",
+      "items": [
+        {
+          "text": "Since 2020, millions of professionals have been working from home.",
+          "highlights": [
+            "have been working"
+          ]
+        },
+        {
+          "text": "A reliable internet connection has become just as important as a comfortable desk.",
+          "highlights": [
+            "reliable",
+            "has become"
+          ]
+        },
+        {
+          "text": "Companies want to automate routine tasks and build more efficient teams.",
+          "highlights": [
+            "automate",
+            "efficient"
           ]
         }
       ]

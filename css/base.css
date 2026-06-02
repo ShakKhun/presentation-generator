@@ -9,6 +9,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: clamp(0.6rem, 1.2vw, 1rem);
   padding: clamp(0.8rem, 1.6vw, 1.5rem);
   box-sizing: border-box;
@@ -16,7 +17,7 @@
 }
 
 .lesson-deck .deck-stage {
-  flex: 1;
+  flex: 0 1 auto;
   min-height: 0;
   width: 100%;
   max-width: min(100%, calc((100vh - 5.75rem) * 16 / 9));
@@ -49,7 +50,15 @@
 }
 
 .lesson-deck .reveal .slides {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   text-align: left;
+  transform: none !important;
+}
+
+.lesson-deck .reveal .slides section {
+  width: 100% !important;
 }
 
 .lesson-deck [hidden] {

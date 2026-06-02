@@ -9,19 +9,20 @@
  * }
  *
  * listStyle: "number" | "letter" | "bullet" | "none"
- * Items may be strings or { "text": "...", "icon": "❤️" }
+ * Items may be strings or { "text": "...", "icon": "❤️", "highlights": ["..."] }
  */
 
-import { escapeHtml } from "../js/utils.js";
+import { applyHighlights, escapeHtml } from "../js/utils.js";
 
 const MAX_LIST_ITEMS = 12;
 const LIST_LETTERS = "abcdefghijklmnopqrstuvwxyz";
 
 export function normalizeListItem(item) {
-  if (typeof item === "string") return { text: item, icon: "" };
+  if (typeof item === "string") return { text: item, icon: "", highlights: [] };
   return {
     text: item.text || item.content || "",
     icon: item.icon || item.emoji || "",
+    highlights: Array.isArray(item.highlights) ? item.highlights : [],
   };
 }
 
@@ -33,9 +34,10 @@ export function getListMarker(style, index) {
 }
 
 export function renderListItem(item, index, listStyle) {
-  const { text, icon } = normalizeListItem(item);
+  const { text, icon, highlights } = normalizeListItem(item);
   const marker = getListMarker(listStyle, index);
   const showMarker = listStyle !== "none" && !icon;
+  const textHtml = applyHighlights(text, highlights);
 
   return (
     `<li class="content-list-item duo-card-soft">` +
@@ -43,7 +45,7 @@ export function renderListItem(item, index, listStyle) {
       ? `<span class="list-marker">${escapeHtml(marker)}</span>`
       : "") +
     (icon ? `<span class="list-icon">${escapeHtml(icon)}</span>` : "") +
-    `<span class="list-text">${escapeHtml(text)}</span>` +
+    `<span class="list-text">${textHtml}</span>` +
     `</li>`
   );
 }

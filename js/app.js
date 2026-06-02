@@ -160,9 +160,9 @@ async function loadSampleLesson() {
             words: [
               {
                 word: "reliable",
-                pronunciation: "/rɪˈlaɪəbəl/",
+                pronunciation: "ri-LY-uh-buhl",
                 translation: "надежный",
-                association: "a friend who always helps",
+                association: "dependable, trustworthy, consistent, steady",
                 example: "She is a reliable employee.",
               },
             ],
