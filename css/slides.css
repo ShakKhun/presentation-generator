@@ -822,6 +822,7 @@
 
 .quiz-feedback.is-success {
   color: var(--quiz-success);
+  animation: success-pulse 0.35s ease;
 }
 
 .quiz-feedback.is-error {
@@ -905,6 +906,18 @@
   }
   75% {
     transform: translateX(4px);
+  }
+}
+
+@keyframes success-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 

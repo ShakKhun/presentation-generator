@@ -59,6 +59,8 @@ import {
   checkMcItem,
   handleQuizCheck,
   revealOralAnswer,
+  playSuccessSound,
+  playErrorSound,
 } from "./quizInteractions.js";
 
 export const REVEAL_OPTIONS = {
@@ -374,6 +376,8 @@ export function buildStandaloneRuntimeScript() {
     inlineFunction(checkMcItem),
     inlineFunction(handleQuizCheck),
     inlineFunction(revealOralAnswer),
+    inlineFunction(playSuccessSound),
+    inlineFunction(playErrorSound),
     inlineFunction(bindQuizInteractions),
     `var slideRegistry = {
   title: renderTitleSlide,

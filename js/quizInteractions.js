@@ -2,6 +2,48 @@
  * Multiple-choice interactions only (gap-fill & error-correction are display-only).
  */
 
+export function playSuccessSound() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var now = ctx.currentTime;
+    [[523.25, 0, 0.12], [659.25, 0.07, 0.12], [783.99, 0.14, 0.12], [1046.5, 0.21, 0.22]].forEach(function(t) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = t[0];
+      gain.gain.setValueAtTime(0.001, now + t[1]);
+      gain.gain.exponentialRampToValueAtTime(0.22, now + t[1] + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + t[1] + t[2]);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + t[1]);
+      osc.stop(now + t[1] + t[2] + 0.06);
+    });
+    setTimeout(function() { ctx.close(); }, 600);
+  } catch (_) {}
+}
+
+export function playErrorSound() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var now = ctx.currentTime;
+    [[180, 0, 0.12], [140, 0.10, 0.15]].forEach(function(t) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = t[0];
+      gain.gain.setValueAtTime(0.001, now + t[1]);
+      gain.gain.exponentialRampToValueAtTime(0.14, now + t[1] + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + t[1] + t[2]);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + t[1]);
+      osc.stop(now + t[1] + t[2] + 0.06);
+    });
+    setTimeout(function() { ctx.close(); }, 600);
+  } catch (_) {}
+}
+
 export function showQuizFeedback(item, message, kind) {
   const feedback = item.querySelector(".quiz-feedback");
   if (!feedback) return;
@@ -43,9 +85,11 @@ export function checkMcItem(item) {
     });
     item.querySelector(".quiz-check-btn").disabled = true;
     showQuizFeedback(item, "Correct!", "is-success");
+    playSuccessSound();
   } else {
     selected.classList.add("is-wrong");
     showQuizFeedback(item, "Not quite — try again!", "is-error");
+    playErrorSound();
     setTimeout(() => {
       if (!item.classList.contains("is-locked")) {
         selected.classList.remove("is-wrong");
@@ -69,6 +113,7 @@ export function revealOralAnswer(btn) {
 
   answer.hidden = false;
   btn.hidden = true;
+  playSuccessSound();
 }
 
 export function bindQuizInteractions(rootEl) {
