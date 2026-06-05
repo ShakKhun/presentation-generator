@@ -907,3 +907,277 @@
     transform: translateX(4px);
   }
 }
+
+@media (max-width: 760px), (max-height: 520px) {
+  .slide-title {
+    padding: 1.25rem !important;
+  }
+
+  .slide-title h1 {
+    font-size: clamp(1.65rem, 8vw, 2.35rem);
+    letter-spacing: 0;
+  }
+
+  .slide-title .subtitle {
+    font-size: clamp(0.95rem, 4.5vw, 1.15rem);
+  }
+
+  .slide-word-bank,
+  .slide-reading,
+  .slide-grammar,
+  .slide-quiz,
+  .slide-oral,
+  .slide-speaking,
+  .slide-list {
+    padding: 0.85rem !important;
+  }
+
+  .slide-word-bank h2 {
+    margin-bottom: 0.65rem;
+    font-size: 0.92rem;
+  }
+
+  .word-bank-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .vocab-card,
+  .vocab-card-inner {
+    min-height: 0;
+  }
+
+  .vocab-card-face {
+    padding: 0.7rem;
+    border-radius: 12px;
+  }
+
+  .vocab-card .word {
+    font-size: clamp(0.9rem, 4.5vw, 1.05rem);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .vocab-card .pronunciation,
+  .vocab-card .translation {
+    font-size: 0.78rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .vocab-card .association,
+  .vocab-card .example {
+    font-size: 0.68rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .slide-reading-inner,
+  .slide-grammar-inner,
+  .slide-quiz-inner,
+  .slide-oral-inner,
+  .slide-speaking-inner,
+  .slide-list-inner {
+    max-height: 100%;
+    padding: 1rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .slide-grammar-inner,
+  .slide-quiz-inner,
+  .slide-oral-inner,
+  .slide-speaking-inner {
+    padding: 0;
+  }
+
+  .slide-badge {
+    margin-bottom: 0.55rem;
+    padding: 0.28rem 0.65rem;
+    font-size: 0.62rem;
+  }
+
+  .reading-title,
+  .grammar-title,
+  .quiz-title,
+  .oral-title,
+  .speaking-title,
+  .list-slide-title {
+    font-size: clamp(1.12rem, 6vw, 1.45rem);
+    line-height: 1.18;
+  }
+
+  .reading-intro,
+  .grammar-subtitle,
+  .quiz-intro,
+  .oral-intro,
+  .speaking-intro,
+  .list-slide-intro {
+    margin-bottom: 0.75rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .reading-paragraph,
+  .grammar-explanation,
+  .grammar-bullets li,
+  .mc-prompt,
+  .gap-prompt,
+  .error-wrong,
+  .gap-answer-reveal,
+  .error-right,
+  .duo-card-answer,
+  .speaking-prompt p,
+  .content-list-item {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .reading-body {
+    gap: 0.5rem;
+  }
+
+  .duo-card-formula,
+  .grammar-example,
+  .quiz-item,
+  .speaking-prompt,
+  .content-list-item {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+
+  .grammar-examples,
+  .quiz-list,
+  .oral-list,
+  .speaking-prompts,
+  .content-list {
+    gap: 0.55rem;
+  }
+
+  .grammar-formula-text {
+    font-size: clamp(0.95rem, 4.8vw, 1.15rem);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .grammar-bullets {
+    padding-left: 1rem;
+  }
+
+  .duo-card-tip {
+    gap: 0.5rem;
+    padding: 0.7rem;
+  }
+
+  .oral-item {
+    grid-template-columns: 1.55rem minmax(0, 1fr);
+    gap: 0.45rem 0.55rem;
+  }
+
+  .oral-item-label,
+  .speaking-num {
+    width: 1.45rem;
+    height: 1.45rem;
+    font-size: 0.72rem;
+  }
+
+  .gap-prompt,
+  .error-wrong,
+  .gap-answer-reveal,
+  .error-right,
+  .duo-card-answer {
+    padding: 0.6rem 0.7rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .gap-blank {
+    min-width: 2.8rem;
+  }
+
+  .oral-answer-btn,
+  .quiz-check-btn {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.72rem;
+  }
+
+  .mc-options {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+
+  .mc-option {
+    padding: 0.62rem 0.7rem;
+    font-size: 0.82rem;
+    min-height: 2.55rem;
+  }
+
+  .speaking-duration {
+    margin-left: 0.35rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.68rem;
+  }
+
+  .speaking-prompt {
+    gap: 0.55rem;
+  }
+
+  .speaking-tips {
+    padding: 0.7rem 0.8rem 0.7rem 1.25rem;
+    font-size: 0.8rem;
+  }
+
+  .list-marker {
+    min-width: 1.15rem;
+  }
+
+  .list-icon {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .slide-word-bank,
+  .slide-reading,
+  .slide-grammar,
+  .slide-quiz,
+  .slide-oral,
+  .slide-speaking,
+  .slide-list {
+    padding: 0.65rem !important;
+  }
+
+  .word-bank-grid {
+    gap: 0.45rem;
+  }
+
+  .vocab-card-face {
+    padding: 0.58rem;
+  }
+
+  .slide-reading-inner,
+  .slide-list-inner {
+    padding: 0.8rem;
+  }
+
+  .oral-item {
+    grid-template-columns: 1fr;
+  }
+
+  .oral-item-label,
+  .gap-prompt,
+  .error-wrong,
+  .error-hint,
+  .oral-answer-btn,
+  .gap-answer-reveal,
+  .error-right,
+  .duo-card-answer {
+    grid-column: 1;
+  }
+
+  .oral-item-label {
+    grid-row: auto;
+    margin: 0;
+  }
+}

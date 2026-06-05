@@ -17,7 +17,7 @@ import { escapeHtml } from "../js/utils.js";
 
 const MAX_ERROR_ITEMS = 4;
 
-export function renderErrorCorrectionItem(item, index) {
+export function renderErrorCorrectionItem(item, index, showAnswer = false) {
   const correct = item.correct || item.answer || "";
 
   return (
@@ -28,15 +28,15 @@ export function renderErrorCorrectionItem(item, index) {
     `<span>${escapeHtml(item.incorrect || "")}</span>` +
     `</div>` +
     (item.hint ? `<p class="error-hint">${escapeHtml(item.hint)}</p>` : "") +
-    `<button type="button" class="oral-answer-btn">Show correction</button>` +
-    `<div class="error-right duo-card-answer" hidden>` +
+    `<button type="button" class="oral-answer-btn"${showAnswer ? " hidden" : ""}>Show correction</button>` +
+    `<div class="error-right duo-card-answer"${showAnswer ? "" : " hidden"}>` +
     `<span class="answer-icon" aria-hidden="true">✓</span>` +
     `<span>${escapeHtml(correct)}</span>` +
     `</div></div>`
   );
 }
 
-export function renderErrorCorrectionSlide(slide) {
+export function renderErrorCorrectionSlide(slide, _index, showAnswers = false) {
   const items = Array.isArray(slide.items)
     ? slide.items.slice(0, MAX_ERROR_ITEMS)
     : [];
@@ -52,7 +52,7 @@ export function renderErrorCorrectionSlide(slide) {
       ? `<p class="oral-intro">${escapeHtml(slide.intro)}</p>`
       : "") +
     `<div class="oral-list">` +
-    items.map(renderErrorCorrectionItem).join("") +
+    items.map((item, i) => renderErrorCorrectionItem(item, i, showAnswers)).join("") +
     `</div></div></section>`
   );
 }

@@ -165,6 +165,59 @@ export function renderSlides(slides) {
   return slides.map((slide, i) => renderSlideStack(slide, i)).join("\n");
 }
 
+const MOBILE_STATIC_ANSWER_TYPES = new Set([
+  "gap-fill",
+  "multiple-choice",
+  "error-correction",
+]);
+
+function addClassToSection(html, className) {
+  return String(html).replace("<section class=\"", `<section class="${className} `);
+}
+
+function renderMobileStaticAnswerSlide(slide) {
+  if (!MOBILE_STATIC_ANSWER_TYPES.has(slide?.type)) return "";
+
+  const answerSlide = {
+    ...slide,
+    title: `${slide.title || "Answers"} · Answers`,
+  };
+
+  let html = "";
+  if (slide.type === "gap-fill") {
+    html = renderGapFillSlide(answerSlide, null, true);
+  } else if (slide.type === "multiple-choice") {
+    html = renderMultipleChoiceSlide(answerSlide, null, true);
+  } else if (slide.type === "error-correction") {
+    html = renderErrorCorrectionSlide(answerSlide, null, true);
+  }
+
+  return addClassToSection(html, "mobile-answer-slide");
+}
+
+function renderMobileStaticSlideGroup(slide, index) {
+  return renderSlide(slide, index) + renderMobileStaticAnswerSlide(slide);
+}
+
+function renderMobileStaticSlideStack(slide, index) {
+  const hiddenSlides = getHiddenSlides(slide);
+  if (!hiddenSlides.length) return renderMobileStaticSlideGroup(slide, index);
+
+  return (
+    `<section class="hidden-slide-stack" data-hidden-slides="${hiddenSlides.length}">` +
+    renderMobileStaticSlideGroup(slide, index) +
+    hiddenSlides
+      .map((hiddenSlide, i) => renderMobileStaticSlideGroup(hiddenSlide, `${index}.${i + 1}`))
+      .join("\n") +
+    `</section>`
+  );
+}
+
+export function renderMobileStaticSlides(slides) {
+  if (!Array.isArray(slides)) return "";
+  return slides.map((slide, i) => renderMobileStaticSlideStack(slide, i)).join("\n");
+}
+
 export function renderProgressDots(total) {
   const count = Math.max(Number(total) || 1, 1);
   return Array.from({ length: count }, (_, i) => {
@@ -305,6 +358,9 @@ export function buildStandaloneRuntimeScript() {
     `function bootLesson(lesson) {
   var root = document.getElementById("lesson-root");
   try {
+    document.documentElement.classList.add("presentation-enhanced");
+    document.body.classList.add("presentation-enhanced");
+    root.classList.add("is-enhanced");
     root.innerHTML = renderDeckMarkup(lesson);
     var deck = root.querySelector(".lesson-deck");
     bindDeckInteractions(deck);
@@ -335,6 +391,8 @@ export function buildStandaloneRuntimeScript() {
 export function generatePresentationHTML(lessonData, assets) {
   const title = getLessonTitle(lessonData);
   const lessonJson = JSON.stringify(lessonData).replace(/</g, "\\u003c");
+  const staticTheme = resolveTheme(lessonData);
+  const staticSlidesHtml = renderMobileStaticSlides(lessonData.slides);
 
   return (
     `<!DOCTYPE html>
@@ -347,13 +405,105 @@ export function generatePresentationHTML(lessonData, assets) {
 ${assets.resetCss}
 ${assets.revealCss}
 ${assets.lessonCss}
-html, body { margin: 0; height: 100%; overflow: hidden; background: var(--deck-shell, #ede8df); }
-#lesson-root { width: 100vw; height: 100vh; position: relative; background: var(--deck-shell, #ede8df); }
-#lesson-root .lesson-deck { position: absolute; inset: 0; width: 100%; height: 100%; }
+html, body { margin: 0; min-height: 100%; background: var(--deck-shell, #ede8df); }
+html.presentation-enhanced, body.presentation-enhanced { height: 100%; overflow: hidden; }
+#lesson-root { width: 100vw; min-height: 100vh; position: relative; background: var(--deck-shell, #ede8df); }
+#lesson-root.is-enhanced { height: 100vh; overflow: hidden; }
+#lesson-root.is-enhanced .lesson-deck { position: absolute; inset: 0; width: 100%; height: 100%; }
+.presentation-loading {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  color: #1a2b3c;
+  font: 600 1rem/1.5 "Segoe UI", system-ui, sans-serif;
+  text-align: center;
+}
+.presentation-loading p {
+  max-width: 30rem;
+  margin: 0;
+}
+.mobile-static-deck {
+  display: none;
+}
+@media (max-width: 760px), (max-height: 520px) {
+  #lesson-root:not(.is-enhanced) {
+    width: 100%;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  #lesson-root:not(.is-enhanced) .presentation-loading {
+    display: none;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0.55rem;
+    box-sizing: border-box;
+    background: var(--deck-shell, #ede8df);
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck > section.hidden-slide-stack {
+    display: contents !important;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck section {
+    width: 100%;
+    min-height: calc(100dvh - 1.1rem);
+    box-sizing: border-box;
+    border-radius: 14px;
+    background: var(--bg);
+    box-shadow: 0 10px 24px rgba(26, 43, 60, 0.12);
+    overflow: hidden;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck .vocab-card {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck .oral-answer-btn,
+  #lesson-root:not(.is-enhanced) .mobile-static-deck .quiz-check-btn {
+    display: none;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck .vocab-card-inner {
+    min-height: 0;
+    transform: none;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck .vocab-card-face.front {
+    display: none;
+  }
+
+  #lesson-root:not(.is-enhanced) .mobile-static-deck .vocab-card-face.back {
+    position: static;
+    transform: none;
+    min-height: 100%;
+  }
+}
   </style>
 </head>
 <body>
-  <div id="lesson-root"></div>
+  <div id="lesson-root">
+    <div class="presentation-loading">
+      <p>Loading presentation... If this message stays visible, open the file in Safari from a web link or local server. Some iPhone file previews block presentation scripts.</p>
+    </div>
+    <noscript>
+      <div class="presentation-loading">
+        <p>JavaScript is required to show this presentation.</p>
+      </div>
+    </noscript>
+    <div class="lesson-deck mobile-static-deck" data-theme="${escapeHtml(staticTheme)}" aria-label="Mobile presentation preview">
+${staticSlidesHtml}
+    </div>
+  </div>
   <script>
 ${escapeScriptForHtml(assets.revealJs)}
   <\/script>

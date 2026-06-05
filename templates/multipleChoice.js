@@ -18,7 +18,7 @@ import { escapeHtml } from "../js/utils.js";
 
 const MAX_MC_QUESTIONS = 4;
 
-export function renderMcQuestion(question, qIndex) {
+export function renderMcQuestion(question, qIndex, showAnswer = false) {
   const options = Array.isArray(question.options)
     ? question.options.slice(0, 6)
     : [];
@@ -32,7 +32,7 @@ export function renderMcQuestion(question, qIndex) {
   const optionsHtml = options
     .map(
       (opt, i) =>
-        `<button type="button" class="mc-option duo-card-soft" data-option-index="${i}">` +
+        `<button type="button" class="mc-option duo-card-soft${showAnswer && i === correctIndex ? " is-correct" : ""}" data-option-index="${i}"${showAnswer ? " disabled" : ""}>` +
         `${escapeHtml(opt)}</button>`
     )
     .join("");
@@ -43,13 +43,13 @@ export function renderMcQuestion(question, qIndex) {
     `<div class="mc-options" role="group" aria-label="Question ${qIndex + 1}">` +
     optionsHtml +
     `</div>` +
-    `<button type="button" class="quiz-check-btn">Check</button>` +
-    `<p class="quiz-feedback" hidden></p>` +
+    `<button type="button" class="quiz-check-btn"${showAnswer ? " hidden" : ""}>Check</button>` +
+    `<p class="quiz-feedback is-success"${showAnswer ? "" : " hidden"}>${showAnswer ? "Correct answer shown." : ""}</p>` +
     `</div>`
   );
 }
 
-export function renderMultipleChoiceSlide(slide) {
+export function renderMultipleChoiceSlide(slide, _index, showAnswers = false) {
   const questions = Array.isArray(slide.questions)
     ? slide.questions.slice(0, MAX_MC_QUESTIONS)
     : [];
@@ -65,7 +65,7 @@ export function renderMultipleChoiceSlide(slide) {
       ? `<p class="quiz-intro">${escapeHtml(slide.intro)}</p>`
       : "") +
     `<div class="quiz-list">` +
-    questions.map(renderMcQuestion).join("") +
+    questions.map((question, i) => renderMcQuestion(question, i, showAnswers)).join("") +
     `</div></div></section>`
   );
 }

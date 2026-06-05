@@ -59,7 +59,7 @@ export function renderGapPrompt(text, hints) {
   return html;
 }
 
-export function renderGapFillItem(item, index) {
+export function renderGapFillItem(item, index, showAnswer = false) {
   const answers = normalizeGapAnswers(item);
   const text = item.text || item.sentence || "";
   const hints = item.hints || (item.hint ? [item.hint] : []);
@@ -82,15 +82,15 @@ export function renderGapFillItem(item, index) {
     `<div class="oral-item gap-fill-item">` +
     `<p class="oral-item-label">${index + 1}</p>` +
     `<div class="gap-prompt duo-card-soft">${renderGapPrompt(text, hints)}</div>` +
-    `<button type="button" class="oral-answer-btn">Show answer</button>` +
-    `<div class="gap-answer-reveal duo-card-answer" hidden>` +
+    `<button type="button" class="oral-answer-btn"${showAnswer ? " hidden" : ""}>Show answer</button>` +
+    `<div class="gap-answer-reveal duo-card-answer"${showAnswer ? "" : " hidden"}>` +
     `<span class="answer-icon" aria-hidden="true">✓</span>` +
     `<span class="gap-answer-text">${filled}</span>` +
     `</div></div>`
   );
 }
 
-export function renderGapFillSlide(slide) {
+export function renderGapFillSlide(slide, _index, showAnswers = false) {
   const items = Array.isArray(slide.items)
     ? slide.items.slice(0, MAX_GAP_ITEMS)
     : [];
@@ -106,7 +106,7 @@ export function renderGapFillSlide(slide) {
       ? `<p class="oral-intro">${escapeHtml(slide.intro)}</p>`
       : "") +
     `<div class="oral-list">` +
-    items.map(renderGapFillItem).join("") +
+    items.map((item, i) => renderGapFillItem(item, i, showAnswers)).join("") +
     `</div></div></section>`
   );
 }

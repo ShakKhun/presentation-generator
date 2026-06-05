@@ -104,3 +104,47 @@
 .lesson-deck .deck-progress-text {
   white-space: nowrap;
 }
+
+@media (max-width: 760px), (max-height: 520px) {
+  .lesson-deck {
+    justify-content: flex-start;
+    gap: 0.55rem;
+    padding: 0.55rem;
+  }
+
+  .lesson-deck .deck-stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .lesson-deck .reveal .slides section {
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(26, 43, 60, 0.12);
+    overflow: hidden;
+  }
+
+  .lesson-deck .reveal .slides > section.hidden-slide-stack {
+    overflow: visible;
+  }
+
+  .lesson-deck .deck-progress {
+    gap: 0.55rem;
+    font-size: 0.72rem;
+  }
+
+  .lesson-deck .deck-progress-dots {
+    gap: 0.3rem;
+  }
+
+  .lesson-deck .deck-progress-dot {
+    width: 0.42rem;
+    height: 0.42rem;
+  }
+
+  .lesson-deck .deck-progress-dot.is-active {
+    width: 1rem;
+  }
+}
