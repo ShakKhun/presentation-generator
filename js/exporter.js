@@ -3,6 +3,7 @@
  */
 
 import { generatePresentationHTML, buildStandaloneRuntimeScript } from "./renderer.js";
+import { getLessonTitle } from "./lessonMeta.js";
 
 let assetCache = null;
 
@@ -77,7 +78,12 @@ export async function downloadPresentation(lessonData) {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "presentation.html";
+  const title = getLessonTitle(lessonData);
+  const filename = (title || "presentation")
+    .replace(/[^a-zA-Z0-9_-]/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_|_$/g, "") || "presentation";
+  anchor.download = filename + ".html";
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
