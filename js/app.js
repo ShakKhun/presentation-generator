@@ -113,6 +113,26 @@ function formatJson() {
 
 function initMonaco() {
   return new Promise((resolve, reject) => {
+    if (typeof window !== "undefined") {
+      const baseUrl = new URL(MONACO_VS, window.location.href).toString();
+      const workerUrl = new URL(MONACO_VS + "/base/worker/workerMain.js", window.location.href).toString();
+      window.MonacoEnvironment = {
+        baseUrl,
+        getWorkerUrl: function () {
+          return (
+            "data:text/javascript;charset=utf-8," +
+            encodeURIComponent(
+              "self.MonacoEnvironment = { baseUrl: '" +
+                baseUrl +
+                "' }; importScripts('" +
+                workerUrl +
+                "')"
+            )
+          );
+        },
+      };
+    }
+
     require.config({ paths: { vs: MONACO_VS } });
 
     require(["vs/editor/editor.main"], () => {
@@ -161,7 +181,7 @@ async function loadSampleLesson() {
               {
                 word: "reliable",
                 pronunciation: "ri-LY-uh-buhl",
-                translation: "надежный",
+                translation: "надёжный",
                 association: "dependable, trustworthy, consistent, steady",
                 example: "She is a reliable employee.",
               },

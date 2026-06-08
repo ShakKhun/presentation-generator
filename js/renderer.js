@@ -52,6 +52,8 @@ import {
   getListMarker,
   resolveListStyle,
 } from "../templates/listSlide.js";
+import { renderBookExerciseSlide } from "../templates/bookExercise.js";
+import { renderGrammarFormSlide } from "../templates/grammarForm.js";
 import {
   bindQuizInteractions,
   showQuizFeedback,
@@ -62,6 +64,7 @@ import {
   playSuccessSound,
   playErrorSound,
 } from "./quizInteractions.js";
+import { toggleBookAnswers } from "../templates/fillBlank.js";
 
 export const REVEAL_OPTIONS = {
   hash: true,
@@ -264,6 +267,14 @@ export function bindDeckInteractions(rootEl) {
   });
 
   bindQuizInteractions(rootEl);
+
+  rootEl.addEventListener("click", (e) => {
+    const bookBtn = e.target.closest(".book-toggle-btn");
+    if (bookBtn && rootEl.contains(bookBtn)) {
+      e.stopPropagation();
+      toggleBookAnswers(rootEl);
+    }
+  });
 }
 
 /** Prevent inline script from breaking out of <script> tags in exported HTML. */
@@ -379,6 +390,13 @@ export function buildStandaloneRuntimeScript() {
     inlineFunction(playSuccessSound),
     inlineFunction(playErrorSound),
     inlineFunction(bindQuizInteractions),
+    inlineFunction(toggleBookAnswers),
+    inlineFunction(renderBlankPrompt),
+    inlineFunction(renderBlankAnswer),
+    inlineFunction(renderBlankItem),
+    inlineFunction(renderFillBlankSlide),
+    inlineFunction(renderBookExerciseSlide),
+    inlineFunction(renderGrammarFormSlide),
     `var slideRegistry = {
   title: renderTitleSlide,
   "word-bank": renderWordBankSlide,
@@ -388,7 +406,9 @@ export function buildStandaloneRuntimeScript() {
   "multiple-choice": renderMultipleChoiceSlide,
   "error-correction": renderErrorCorrectionSlide,
   "guided-speaking": renderGuidedSpeakingSlide,
-  list: renderListSlide
+  list: renderListSlide,
+  "book-exercise": renderBookExerciseSlide,
+  "grammar-form": renderGrammarFormSlide
 };`,
     inlineFunction(renderSlide),
     inlineFunction(getHiddenSlides),
@@ -408,6 +428,14 @@ export function buildStandaloneRuntimeScript() {
     card.setAttribute("aria-pressed", flipped ? "true" : "false");
   });
   bindQuizInteractions(rootEl);
+  rootEl.addEventListener("click", function (e) {
+    const bookBtn = e.target.closest(".book-toggle-btn");
+    if (bookBtn && rootEl.contains(bookBtn)) {
+      e.stopPropagation();
+      toggleBookAnswers(rootEl);
+      return;
+    }
+  });
 }`,
     `function bootLesson(lesson) {
   var root = document.getElementById("lesson-root");

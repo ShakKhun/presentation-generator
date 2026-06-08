@@ -17,6 +17,8 @@ import { renderMultipleChoiceSlide } from "../templates/multipleChoice.js";
 import { renderErrorCorrectionSlide } from "../templates/errorCorrection.js";
 import { renderGuidedSpeakingSlide } from "../templates/guidedSpeaking.js";
 import { renderListSlide } from "../templates/listSlide.js";
+import { renderBookExerciseSlide } from "../templates/bookExercise.js";
+import { renderGrammarFormSlide } from "../templates/grammarForm.js";
 import { escapeHtml } from "./utils.js";
 
 export const slideRegistry = {
@@ -29,6 +31,8 @@ export const slideRegistry = {
   "error-correction": renderErrorCorrectionSlide,
   "guided-speaking": renderGuidedSpeakingSlide,
   list: renderListSlide,
+  "book-exercise": renderBookExerciseSlide,
+  "grammar-form": renderGrammarFormSlide,
 };
 
 export function renderUnknownSlide(slide, index) {

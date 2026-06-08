@@ -1194,3 +1194,120 @@
     margin: 0;
   }
 }
+
+/* ── Book exercise slide ── */
+.slide-book-exercise {
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem 1.5rem !important;
+  text-align: left;
+}
+
+.slide-book-exercise .slide-oral-inner {
+  width: 100%;
+  max-width: 880px;
+  max-height: 100%;
+  overflow-y: auto;
+  font-family: var(--font-ui);
+}
+
+.book-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.book-word {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 700;
+  border: 2px solid var(--border);
+}
+
+.book-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.book-prompt {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.book-num {
+  font-weight: 800;
+  color: var(--accent);
+  margin-right: 0.35rem;
+}
+
+.book-answers-toggle {
+  margin-bottom: 0.5rem;
+}
+
+.book-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  background: var(--answer-bg);
+  border: 2px solid var(--answer-border);
+  border-radius: var(--radius-md);
+}
+
+.book-answer-line {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* ── Grammar form slide ── */
+.slide-grammar-form {
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem 1.5rem !important;
+  text-align: left;
+}
+
+.slide-grammar-form .slide-oral-inner {
+  width: 100%;
+  max-width: 880px;
+  max-height: 100%;
+  overflow-y: auto;
+  font-family: var(--font-ui);
+}
+
+@media (max-width: 760px), (max-height: 520px) {
+  .book-word {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.65rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .slide-book-exercise,
+  .slide-grammar-form {
+    padding: 0.65rem !important;
+  }
+
+  .book-words {
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .book-word {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.55rem;
+  }
+}
