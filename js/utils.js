@@ -4,7 +4,7 @@
 
 export const WORD_BANK_SIZE = 6;
 export const DEFAULT_THEME = "light-modern";
-export const THEMES = ["light-modern", "dark-academy"];
+export const THEMES = ["light-modern", "dark-academy", "pink-girly"];
 
 export function escapeHtml(str) {
   if (str == null) return "";

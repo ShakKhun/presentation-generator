@@ -89,3 +89,40 @@
   --progress-text: #f3f5f9;
   --progress-track: rgba(243, 245, 249, 0.16);
 }
+
+.lesson-deck[data-theme="pink-girly"] {
+  --bg: #fff4f9;
+  --card: #ffffff;
+  --text: #5a2a42;
+  --text-muted: #9c5a78;
+  --accent: #f472b6;
+  --accent-secondary: #f59e0b;
+  --accent-soft: #fce7f3;
+  --shadow: 0 8px 24px rgba(244, 114, 182, 0.18);
+  --shadow-soft: 0 4px 12px rgba(244, 114, 182, 0.10);
+  --border: #fbcfe8;
+  --flip-back-bg: #fdf2f8;
+  --highlight-bg: #fef3c7;
+  --highlight-text: #a16207;
+  --highlight-border: #fbbf24;
+  --grammar-bg: #fce7f3;
+  --grammar-border: #f472b6;
+  --grammar-formula-bg: linear-gradient(135deg, #fce7f3 0%, #fff1f2 100%);
+  --tip-bg: #fff7ed;
+  --tip-border: #fdba74;
+  --badge-reading: #ec4899;
+  --badge-grammar: #f472b6;
+  --badge-quiz: #c084fc;
+  --badge-oral: #fb923c;
+  --badge-speaking: #f472b6;
+  --badge-list: #f59e0b;
+  --answer-bg: #fce7f3;
+  --answer-border: #f472b6;
+  --quiz-success: #f472b6;
+  --quiz-error: #fb7185;
+  --quiz-neutral: #9c5a78;
+  --deck-shell: #fff0f6;
+  --deck-shadow: 0 24px 56px rgba(244, 114, 182, 0.20);
+  --progress-text: #5a2a42;
+  --progress-track: rgba(244, 114, 182, 0.18);
+}
