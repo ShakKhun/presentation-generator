@@ -630,6 +630,35 @@
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
 }
 
+.book-toggle-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.65rem 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent-secondary);
+  border: none;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.15s;
+  text-align: center;
+}
+
+.book-toggle-btn:hover {
+  filter: brightness(1.05);
+}
+
+.book-toggle-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
 .gap-answer-inline {
   color: var(--accent-secondary);
   font-weight: 800;

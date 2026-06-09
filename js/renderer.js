@@ -64,7 +64,13 @@ import {
   playSuccessSound,
   playErrorSound,
 } from "./quizInteractions.js";
-import { toggleBookAnswers } from "../templates/fillBlank.js";
+import {
+  toggleBookAnswers,
+  renderBlankPrompt,
+  renderBlankAnswer,
+  renderBlankItem,
+  renderFillBlankSlide,
+} from "../templates/fillBlank.js";
 
 export const REVEAL_OPTIONS = {
   hash: true,
@@ -347,6 +353,8 @@ export function buildStandaloneRuntimeScript() {
     "var MAX_ERROR_ITEMS = 4;",
     "var MAX_SPEAKING_PROMPTS = 6;",
     "var MAX_LIST_ITEMS = 12;",
+    "var MAX_BOOK_ITEMS = 10;",
+    "var MAX_GRAMMAR_ITEMS = 8;",
     "var LIST_LETTERS = \"abcdefghijklmnopqrstuvwxyz\";",
     `var DEFAULT_THEME = ${JSON.stringify(DEFAULT_THEME)};`,
     `var THEMES = ${JSON.stringify(THEMES)};`,

@@ -3,6 +3,7 @@
  */
 
 import { escapeHtml } from "../js/utils.js";
+import { playSuccessSound } from "../js/quizInteractions.js";
 
 export function toggleBookAnswers(rootEl) {
   const panel = rootEl.querySelector(".book-answers");
@@ -15,6 +16,9 @@ export function toggleBookAnswers(rootEl) {
   if (btn) {
     btn.textContent = isHidden ? "Hide answers" : "Show answers";
     btn.setAttribute("aria-expanded", String(isHidden));
+    if (isHidden) {
+      try { playSuccessSound(); } catch (_) {}
+    }
   }
 }
 
