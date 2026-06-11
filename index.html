@@ -22,8 +22,13 @@
 
   <main class="app-workspace">
     <section class="panel panel-editor" aria-label="Lesson JSON editor">
+      <div class="panel-tabs">
+        <button type="button" class="panel-tab active" data-tab="slides">Slides</button>
+        <button type="button" class="panel-tab" data-tab="hidden">Hidden Slides</button>
+      </div>
       <div class="panel-label">JSON Editor</div>
       <div id="monaco-editor" role="textbox" aria-label="Lesson JSON"></div>
+      <div id="monaco-hidden-slides" role="textbox" aria-label="Hidden slides JSON" class="hidden"></div>
       <div class="panel-toolbar">
         <label for="theme-select">Theme</label>
         <select id="theme-select" aria-label="Presentation theme">
@@ -33,6 +38,7 @@
           <option value="pink-girly">Pink Girly</option>
         </select>
         <div class="toolbar-actions">
+          <button type="button" class="btn-ghost" id="btn-copy-prompt" title="Copy JSON format prompt">Copy Prompt</button>
           <button type="button" class="btn-ghost" id="btn-format" title="Format JSON (Shift+Alt+F)">Format</button>
           <button type="button" class="btn-primary" id="btn-preview">Preview</button>
           <button type="button" class="btn-secondary" id="btn-download">Download</button>

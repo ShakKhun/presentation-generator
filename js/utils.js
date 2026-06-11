@@ -21,14 +21,50 @@ export function resolveTheme(lesson, override) {
 }
 
 export function parseLessonJson(text) {
-  const data = JSON.parse(text);
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    const trimmed = text.trim();
+    if (trimmed.length > 0 && !trimmed.startsWith("[")) {
+      try {
+        data = JSON.parse("[" + text + "]");
+      } catch {
+        throw e;
+      }
+    } else {
+      throw e;
+    }
+  }
+
+  if (Array.isArray(data)) {
+    return { theme: DEFAULT_THEME, slides: data };
+  }
+  if (data && typeof data === "object" && data.type && !data.slides) {
+    return { theme: DEFAULT_THEME, slides: [data] };
+  }
   if (!data || typeof data !== "object") {
-    throw new Error("Root must be a JSON object.");
+    throw new Error("Root must be a JSON array, object, or slide object.");
   }
   if (!Array.isArray(data.slides)) {
     throw new Error('Lesson must include a "slides" array.');
   }
   return data;
+}
+
+export function mergeHiddenSlides(lesson) {
+  if (!lesson.hiddenSlides || !Array.isArray(lesson.hiddenSlides) || lesson.hiddenSlides.length === 0) {
+    return lesson;
+  }
+  const slides = [...lesson.slides];
+  const lastListIndex = slides.map((s, i) => ({ slide: s, index: i }))
+    .filter(({ slide }) => slide.type === "list" && !slide.hiddenSlides)
+    .pop()?.index;
+  if (lastListIndex !== undefined) {
+    slides[lastListIndex] = { ...slides[lastListIndex], hiddenSlides: lesson.hiddenSlides };
+  }
+  const { hiddenSlides, ...rest } = lesson;
+  return { ...rest, slides };
 }
 
 export function applyTheme(rootEl, themeName) {

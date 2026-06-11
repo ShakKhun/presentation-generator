@@ -15,7 +15,8 @@ import { getLessonTitle } from "./lessonMeta.js";
 
 const MONACO_VS = "vendor/monaco/min/vs";
 
-let editor = null;
+let slidesEditor = null;
+let hiddenSlidesEditor = null;
 let previewReveal = null;
 let previewDeckRoot = null;
 
@@ -63,8 +64,39 @@ function mountPreview(lesson) {
   }
 }
 
+function getHiddenSlidesFromJson(text) {
+  if (!text || text.trim() === "") return [];
+  try {
+    const data = JSON.parse(text);
+    if (Array.isArray(data)) return data;
+    if (data && typeof data === "object" && data.type) return [data];
+  } catch {
+    // Not valid JSON
+  }
+  return [];
+}
+
 function getLessonFromEditor() {
-  return parseLessonJson(editor.getValue());
+  const slidesText = slidesEditor?.getValue() || "[]";
+  const hiddenText = hiddenSlidesEditor?.getValue() || "";
+
+  let lesson = parseLessonJson(slidesText);
+
+  if (hiddenText && hiddenText.trim() !== "") {
+    const hiddenSlides = getHiddenSlidesFromJson(hiddenText);
+    if (hiddenSlides.length > 0) {
+      const slides = [...lesson.slides];
+      const lastListIndex = slides.map((s, i) => ({ slide: s, index: i }))
+        .filter(({ slide }) => slide.type === "list" && !slide.hiddenSlides)
+        .pop()?.index;
+      if (lastListIndex !== undefined) {
+        slides[lastListIndex] = { ...slides[lastListIndex], hiddenSlides };
+      }
+      lesson = { ...lesson, slides };
+    }
+  }
+
+  return lesson;
 }
 
 function runPreview() {
@@ -101,14 +133,201 @@ async function runDownload() {
   }
 }
 
-function formatJson() {
+function formatCurrentTab() {
+  const activeTab = document.querySelector(".panel-tab.active");
+  if (!activeTab) return;
+  const tab = activeTab.dataset.tab;
+  const editor = tab === "slides" ? slidesEditor : hiddenSlidesEditor;
+  if (!editor) return;
   try {
-    const lesson = getLessonFromEditor();
-    editor.setValue(JSON.stringify(lesson, null, 2));
-    setStatus("JSON formatted.", true);
+    const parsed = JSON.parse(editor.getValue());
+    const formatted = Array.isArray(parsed) ? parsed : parsed?.type ? [parsed] : parsed;
+    editor.setValue(JSON.stringify(formatted, null, 2));
+    setStatus(`${tab === "slides" ? "Slides" : "Hidden"} JSON formatted.`, true);
   } catch (err) {
     setStatus(err.message || String(err));
   }
+}
+
+function switchTab(tabName) {
+  document.querySelectorAll(".panel-tab").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tab === tabName);
+  });
+  document.getElementById("monaco-editor").classList.toggle("hidden", tabName !== "slides");
+  document.getElementById("monaco-hidden-slides").classList.toggle("visible", tabName === "hidden");
+}
+
+const PROMPT_TEXT = `LESSON JSON FORMAT
+
+Generate a JSON array of slide objects.
+
+Lesson Generation Rules
+
+- All slide types described below are available.
+- Not every slide type must be used.
+- Any slide type may appear multiple times.
+- Use only the slides that improve the lesson.
+- Arrange slides in the most logical teaching order.
+- Include only fields that belong to the selected slide type.
+- Output valid JSON only.
+
+Available slide types:
+
+{
+"type": "title",
+"title": string,
+"subtitle": string
+}
+
+{
+"type": "word-bank",
+"words": [
+{
+"word": string,
+"pronunciation": string,
+"translation": string,
+"association": string,
+"example": string
+}
+]
+}
+
+{
+"type": "reading",
+"badge": string,
+"title": string,
+"intro": string,
+"blocks": [
+{
+"type": "heading",
+"text": string
+},
+{
+"type": "paragraph",
+"text": string,
+"highlights": [string]
+}
+]
+}
+
+{
+"type": "grammar",
+"badge": string,
+"title": string,
+"subtitle": string,
+"formula": string,
+"explanation": string,
+"bullets": [string],
+"examples": [
+{
+"en": string,
+"ru": string
+}
+],
+"tip": string
+}
+
+{
+"type": "gap-fill",
+"badge": string,
+"title": string,
+"intro": string,
+"items": [
+{
+"text": string,
+"hint": string,
+"answer": string
+},
+{
+"text": string,
+"hints": [string],
+"answers": [string]
+}
+]
+}
+
+{
+"type": "book-exercise",
+"badge": string,
+"title": string,
+"words": [string],
+"items": [
+{
+"text": string,
+"answer": string
+}
+]
+}
+
+{
+"type": "multiple-choice",
+"badge": string,
+"title": string,
+"intro": string,
+"questions": [
+{
+"prompt": string,
+"options": [string],
+"answer": number
+}
+]
+}
+
+{
+"type": "error-correction",
+"badge": string,
+"title": string,
+"intro": string,
+"items": [
+{
+"incorrect": string,
+"correct": string,
+"hint": string
+}
+]
+}
+
+{
+"type": "guided-speaking",
+"badge": string,
+"title": string,
+"duration": string,
+"intro": string,
+"prompts": [string],
+"tips": [string]
+}
+
+{
+"type": "list",
+"badge": string,
+"title": string,
+"listStyle": "bullet | number | letter | none",
+"intro": string,
+"items": [string | object]
+}`;
+
+function copyPrompt() {
+  navigator.clipboard.writeText(PROMPT_TEXT).then(() => {
+    setStatus("Prompt copied to clipboard.", true);
+  }).catch(() => {
+    setStatus("Failed to copy prompt.", false);
+  });
+}
+
+function createEditor(elementId, initialValue) {
+  return monaco.editor.create(document.getElementById(elementId), {
+    value: initialValue,
+    language: "json",
+    theme: "vs-dark",
+    automaticLayout: true,
+    minimap: { enabled: false },
+    fontSize: 13,
+    lineNumbers: "on",
+    scrollBeyondLastLine: false,
+    wordWrap: "on",
+    formatOnPaste: true,
+    tabSize: 2,
+  });
 }
 
 function initMonaco() {
@@ -136,23 +355,11 @@ function initMonaco() {
     require.config({ paths: { vs: MONACO_VS } });
 
     require(["vs/editor/editor.main"], () => {
-      editor = monaco.editor.create(document.getElementById("monaco-editor"), {
-        value: "",
-        language: "json",
-        theme: "vs-dark",
-        automaticLayout: true,
-        minimap: { enabled: false },
-        fontSize: 13,
-        lineNumbers: "on",
-        scrollBeyondLastLine: false,
-        wordWrap: "on",
-        formatOnPaste: true,
-        tabSize: 2,
-      });
+      slidesEditor = createEditor("monaco-editor", "");
 
-      editor.addCommand(
+      slidesEditor.addCommand(
         monaco.KeyMod.Shift | monaco.KeyMod.Alt | monaco.KeyCode.KeyF,
-        formatJson
+        formatCurrentTab
       );
 
       resolve();
@@ -167,28 +374,25 @@ async function loadSampleLesson() {
     return await response.text();
   } catch {
     return JSON.stringify(
-      {
-        theme: "light-modern",
-        slides: [
-          {
-            type: "title",
-            title: "Technology Vocabulary",
-            subtitle: "B1 ESL Lesson",
-          },
-          {
-            type: "word-bank",
-            words: [
-              {
-                word: "reliable",
-                pronunciation: "ri-LY-uh-buhl",
-                translation: "надёжный",
-                association: "dependable, trustworthy, consistent, steady",
-                example: "She is a reliable employee.",
-              },
-            ],
-          },
-        ],
-      },
+      [
+        {
+          type: "title",
+          title: "Technology Vocabulary",
+          subtitle: "B1 ESL Lesson",
+        },
+        {
+          type: "word-bank",
+          words: [
+            {
+              word: "reliable",
+              pronunciation: "ri-LY-uh-buhl",
+              translation: "надёжный",
+              association: "dependable, trustworthy, consistent, steady",
+              example: "She is a reliable employee.",
+            },
+          ],
+        },
+      ],
       null,
       2
     );
@@ -199,11 +403,18 @@ async function bootstrap() {
   try {
     await initMonaco();
     const sample = await loadSampleLesson();
-    editor.setValue(sample);
+    slidesEditor.setValue(sample);
+
+    hiddenSlidesEditor = createEditor("monaco-hidden-slides", "");
+
+    document.querySelectorAll(".panel-tab").forEach(btn => {
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    });
 
     document.getElementById("btn-preview").addEventListener("click", runPreview);
     document.getElementById("btn-download").addEventListener("click", runDownload);
-    document.getElementById("btn-format").addEventListener("click", formatJson);
+    document.getElementById("btn-format").addEventListener("click", formatCurrentTab);
+    document.getElementById("btn-copy-prompt").addEventListener("click", copyPrompt);
     themeSelect.addEventListener("change", () => {
       if (previewDeckRoot) runPreview();
     });
