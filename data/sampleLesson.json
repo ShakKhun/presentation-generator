@@ -235,13 +235,11 @@
     "items": [
       {
         "incorrect": "She don't like digital tools.",
-        "correct": "She doesn't like digital tools.",
-        "hint": "3rd person singular"
+        "correct": "She doesn't like digital tools."
       },
       {
         "incorrect": "They have upgrade their software last month.",
-        "correct": "They upgraded their software last month.",
-        "hint": "Past simple vs Present Perfect"
+        "correct": "They upgraded their software last month."
       }
     ]
   },

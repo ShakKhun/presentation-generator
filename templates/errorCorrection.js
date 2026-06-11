@@ -27,7 +27,6 @@ export function renderErrorCorrectionItem(item, index, showAnswer = false) {
     `<span class="answer-icon-wrong" aria-hidden="true">✗</span>` +
     `<span>${escapeHtml(item.incorrect || "")}</span>` +
     `</div>` +
-    (item.hint ? `<p class="error-hint">${escapeHtml(item.hint)}</p>` : "") +
     `<button type="button" class="oral-answer-btn"${showAnswer ? " hidden" : ""}>Show correction</button>` +
     `<div class="error-right duo-card-answer"${showAnswer ? "" : " hidden"}>` +
     `<span class="answer-icon" aria-hidden="true">✓</span>` +
