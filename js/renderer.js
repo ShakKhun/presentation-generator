@@ -295,6 +295,10 @@ function inlineFunction(fn) {
 
 /**
  * Developer JSON viewer overlay: <https://github.com/jsxparser/json-viewer-interactive>
+ *
+ * Shows TWO panels:
+ *   - "Main Slides"    ← the primary slides array
+ *   - "Hidden Slides"  ← optional hidden/bonus slides
  */
 function showJsonViewer() {
   var overlay = document.getElementById("json-viewer-overlay");
@@ -304,22 +308,41 @@ function showJsonViewer() {
     overlay.className = "json-viewer-overlay";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-label", "Lesson JSON Viewer");
+  }
+  var mainText = typeof LESSON._mainSlides === "string"
+    ? LESSON._mainSlides
+    : JSON.stringify(LESSON, null, 2);
+  var hiddenText = typeof LESSON._hiddenSlides === "string"
+    ? LESSON._hiddenSlides || "[]"
+    : "[]";
+
   overlay.innerHTML = '<div class="json-viewer-panel">' +
     '<div class="json-viewer-header">' +
       '<span>Lesson JSON (Developer View)</span>' +
       '<div style="display:flex;gap:0.5rem;">' +
-        '<button class="json-viewer-copy" aria-label="Copy JSON">Copy</button>' +
+        '<button class="json-viewer-copy" aria-label="Copy main JSON">Copy</button>' +
+        '<button class="json-viewer-copy json-viewer-copy--hidden" aria-label="Copy hidden JSON">Copy Hidden</button>' +
         '<button class="json-viewer-close" aria-label="Close">&times;</button>' +
       '</div>' +
     '</div>' +
-    '<pre class="json-viewer-body">' + escapeHtml(JSON.stringify(LESSON, null, 2)) + '</pre>' +
+    '<div class="json-viewer-panels">' +
+      '<div class="json-viewer-panel-col">' +
+        '<div class="json-viewer-panel-title">Main Slides</div>' +
+        '<pre class="json-viewer-body json-viewer-body--main">' + escapeHtml(mainText) + '</pre>' +
+      '</div>' +
+      '<div class="json-viewer-panel-col">' +
+        '<div class="json-viewer-panel-title">Hidden Slides</div>' +
+        '<pre class="json-viewer-body json-viewer-body--hidden">' + escapeHtml(hiddenText) + '</pre>' +
+      '</div>' +
+    '</div>' +
   '</div>';
   document.body.appendChild(overlay);
   overlay.querySelector(".json-viewer-close").addEventListener("click", hideJsonViewer);
-  var copyBtn = overlay.querySelector(".json-viewer-copy");
+  var copyBtn = overlay.querySelector(".json-viewer-copy:not(.json-viewer-copy--hidden)");
+  var copyHiddenBtn = overlay.querySelector(".json-viewer-copy--hidden");
   copyBtn.addEventListener("click", function(e) {
     e.stopPropagation();
-    var text = JSON.stringify(LESSON, null, 2);
+    var text = mainText;
     navigator.clipboard.writeText(text).then(function() {
       copyBtn.textContent = "Copied!";
       setTimeout(function() { copyBtn.textContent = "Copy"; }, 1500);
@@ -328,10 +351,20 @@ function showJsonViewer() {
       setTimeout(function() { copyBtn.textContent = "Copy"; }, 1500);
     });
   });
-    overlay.addEventListener("click", function(e) {
-      if (e.target === overlay) hideJsonViewer();
+  copyHiddenBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    var text = hiddenText;
+    navigator.clipboard.writeText(text).then(function() {
+      copyHiddenBtn.textContent = "Copied!";
+      setTimeout(function() { copyHiddenBtn.textContent = "Copy Hidden"; }, 1500);
+    }).catch(function() {
+      copyHiddenBtn.textContent = "Failed";
+      setTimeout(function() { copyHiddenBtn.textContent = "Copy Hidden"; }, 1500);
     });
-  }
+  });
+  overlay.addEventListener("click", function(e) {
+    if (e.target === overlay) hideJsonViewer();
+  });
   overlay.hidden = false;
   overlay.querySelector(".json-viewer-close").focus();
 }
@@ -676,6 +709,41 @@ html.presentation-enhanced, body.presentation-enhanced { height: 100%; overflow:
       color: #1f2937;
       background: #fff;
       flex: 1;
+    }
+
+    .json-viewer-panels {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .json-viewer-panel-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .json-viewer-panel-col + .json-viewer-panel-col {
+      border-left: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .json-viewer-panel-title {
+      padding: 0.45rem 1.25rem;
+      font: 700 0.78rem/1.2 "Segoe UI", system-ui, sans-serif;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #fafafa;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      flex-shrink: 0;
+    }
+
+    .json-viewer-panel-col .json-viewer-body {
+      padding-top: 1rem;
     }
   </style>
 </head>

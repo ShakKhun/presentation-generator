@@ -111,11 +111,15 @@ function runPreview() {
 
 async function runDownload() {
   try {
+    const rawMainSlides = slidesEditor?.getValue() || "[]";
+    const rawHiddenSlides = hiddenSlidesEditor?.getValue() || "";
     const lesson = getLessonFromEditor();
     const override = getThemeOverride();
     const exportLesson = override
       ? { ...lesson, theme: override }
       : lesson;
+    exportLesson._mainSlides = rawMainSlides;
+    exportLesson._hiddenSlides = rawHiddenSlides;
 
     if (!window.__exportAssetsReady) {
       setStatus("Loading export assets…");
