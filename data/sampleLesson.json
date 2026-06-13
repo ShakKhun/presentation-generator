@@ -11,42 +11,42 @@
         "word": "reliable",
         "pronunciation": "ri-LY-uh-buhl",
         "translation": "надёжный",
-        "association": "dependable, trustworthy, consistent, steady",
+        "synonyms": "dependable, trustworthy, consistent, steady",
         "example": "She is a reliable employee."
       },
       {
         "word": "innovative",
         "pronunciation": "IN-uh-vay-tiv",
         "translation": "инновационный",
-        "association": "creative, original, inventive, forward-thinking",
+        "synonyms": "creative, original, inventive, forward-thinking",
         "example": "They use innovative tools in class."
       },
       {
         "word": "efficient",
         "pronunciation": "ih-FISH-uhnt",
         "translation": "эффективный",
-        "association": "productive, effective, organized, time-saving",
+        "synonyms": "productive, effective, organized, time-saving",
         "example": "This app is very efficient."
       },
       {
         "word": "automate",
         "pronunciation": "AW-tuh-mayt",
         "translation": "автоматизировать",
-        "association": "mechanize, streamline, program, systematize",
+        "synonyms": "mechanize, streamline, program, systematize",
         "example": "We automate email replies."
       },
       {
         "word": "digital",
         "pronunciation": "DIJ-i-tuhl",
         "translation": "цифровой",
-        "association": "online, electronic, virtual, computerized",
+        "synonyms": "online, electronic, virtual, computerized",
         "example": "Students prefer digital notes."
       },
       {
         "word": "upgrade",
         "pronunciation": "up-GRAYD",
         "translation": "обновлять",
-        "association": "improve, update, enhance, modernize",
+        "synonyms": "improve, update, enhance, modernize",
         "example": "I need to upgrade my laptop."
       }
     ]

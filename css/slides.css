@@ -384,7 +384,7 @@
   color: var(--text);
 }
 
-.vocab-card .association,
+.vocab-card .synonyms,
 .vocab-card .example {
   margin: 0 0 0.35rem;
   font-size: 0.8rem;
@@ -1008,8 +1008,8 @@
     overflow-wrap: anywhere;
   }
 
-  .vocab-card .association,
-  .vocab-card .example {
+.vocab-card .synonyms,
+   .vocab-card .example {
     font-size: 0.68rem;
     line-height: 1.25;
     overflow-wrap: anywhere;

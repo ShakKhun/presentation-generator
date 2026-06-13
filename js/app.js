@@ -190,7 +190,7 @@ Available slide types:
 "word": string,
 "pronunciation": string,
 "translation": string,
-"association": string,
+"synonyms": string,
 "example": string
 }
 ]
@@ -391,7 +391,7 @@ async function loadSampleLesson() {
               word: "reliable",
               pronunciation: "ri-LY-uh-buhl",
               translation: "надёжный",
-              association: "dependable, trustworthy, consistent, steady",
+              synonyms: "dependable, trustworthy, consistent, steady",
               example: "She is a reliable employee.",
             },
           ],

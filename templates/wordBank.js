@@ -24,8 +24,8 @@ export function renderVocabCard(word, index) {
     `<div class="vocab-card-face back">` +
     `<p class="word word-back">${escapeHtml(word.word)}</p>` +
     `<p class="translation">${escapeHtml(word.translation || "")}</p>` +
-    (word.association
-      ? `<p class="association">${escapeHtml(word.association)}</p>`
+    (word.synonyms
+      ? `<p class="synonyms">${escapeHtml(word.synonyms)}</p>`
       : "") +
     (word.example
       ? `<p class="example">${escapeHtml(word.example)}</p>`
